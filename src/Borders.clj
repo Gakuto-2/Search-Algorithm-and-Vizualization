@@ -1,6 +1,6 @@
 (ns Borders)
 
-
+;;I'm here
 ;; Uses 4 defined mini-functions before the ultimate border function
 ;; (border x y) where input "x" "y" is the boundary of the map.
 
