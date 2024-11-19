@@ -71,3 +71,4 @@
   (conj #{} [i j])
     ))
 
+;;brainrot
