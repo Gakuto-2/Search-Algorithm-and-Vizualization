@@ -6,7 +6,7 @@
 
 (defn pre-h-wall 
   "For nodes [i 0] where i 0 -> x"
-  [x y]
+  [x y] ;; y is not used here
   (let [coords1 
         (for [i (range (inc x))] 
            [i 0])] 
@@ -21,7 +21,7 @@
 
 (defn pre-v-wall 
   "For nodes [0 j] where j 0 -> y"
-  [x y]
+  [x y] ;; x is not used here
   (let [coords2
         (for [j (range (inc y))]
           [0 j])]
