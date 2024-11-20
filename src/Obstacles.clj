@@ -9,9 +9,7 @@
 ;; We can also generate the ending point (of the wall generation) by either having the x coordinates or y coordinates fixed, and the other is determined by the rand-int
 ;  function
 
-(defn generate-obs [])
-
-(generate-obs)
+;___________________________________________________________________________________
 
 ;; removing the starting & end point disjoin from the obstacle hashset
 ;; seq is used to make it into a list
@@ -28,10 +26,11 @@
 (disj #{[1 2] [3 4]} [1 2])
 
 
+;__________________________________________________________________________________________
 
 ;; CODING
 ; we have the borders hashset
-(defn emptyspace
+(defn empty-space
   "fn that keeps track of the options of generating the start node"
   [x y]
   (let [coords 
@@ -42,16 +41,50 @@
     (into #{} coords))
   )
 
-(emptyspace 3 3)
-(def s-node (rand-nth (seq (emptyspace 3 3))))
+(empty-space 3 3)
+(def trackempty (seq (empty-space 3 3)))
 
 
-(defn startnode
+(rand-nth (seq (empty-space 3 3)))
+
+(defn choose-node
   "generating the start node, given the limit for input (we expect 30 30)"
   [x y]
-  (let [options (seq (emptyspace 3 3))]
+  (let [options trackempty]
   (rand-nth options)))
-;(startnode 3 3)
+(choose-node 3 3)
+
+; (disj #{[2 3] [4 5] [1 1]} [1 1])
+;     (disj trackempty start)
+
+
+
+(defn end-node
+  [x y] 
+  (let [hz (rand-int 2)]
+    (if (= hz 0)
+      (let [new-y (inc (rand-int (- y 1)))]
+        (into (conj [] (nth [1 2] 0)) [new-y]))
+      (let [new-x (inc (rand-int (- x 1)))]
+        (into [new-x] (rest [1 2])))))
+  )
+(end-node 5 5)
+
+(defn generate-wall
+  [x y]
+  (let [start (choose-node x y)]
+    (let [hz (rand-int 2)]
+      (if (= hz 0) 
+        (let [new-y (inc (rand-int (- y 1)))]
+          (into (conj [] (nth start 0)) [new-y]))
+        (let [new-x (inc (rand-int (- x 1)))]
+          (into [new-x] (rest start)))) 
+      )))
+
+(generate-wall 3 3)
+
+;(into ['nX] (rest ['x 'y]))
+;(into (conj [] (nth ['x 'y] 0)) ['nY])
 
 
 
@@ -70,5 +103,3 @@
   (for [j (range 3)]
   (conj #{} [i j])
     ))
-
-;;brainrot
