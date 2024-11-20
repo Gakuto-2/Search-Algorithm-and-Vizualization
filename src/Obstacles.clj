@@ -70,6 +70,10 @@
   )
 (end-node 5 5)
 
+;; where and how can I store the nodes?
+;; use the start and end node twice: 1. generate the wall   2. to remove from the empty-space before generating a new start node.
+;; We also need to record the start node to generate the end node...
+
 (defn generate-wall
   [x y]
   (let [start (choose-node x y)]
@@ -88,13 +92,13 @@
 
 
 
-(defn remove-node
-  "generating the start node, given the limit for input (we expect 30 30)"
-  [x y]
-  (let [options (emptyspace 3 3)]
-    (disj options s-node)))
+;(defn remove-node
+;  "generating the start node, given the limit for input (we expect 30 30)"
+;  [x y]
+;  (let [options (emptyspace 3 3)]
+;    (disj options s-node)))
 
-(remove-node 3 3)
+;(remove-node 3 3)
 
 
 
