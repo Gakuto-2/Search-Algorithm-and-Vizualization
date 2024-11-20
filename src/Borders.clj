@@ -69,6 +69,9 @@
 
 (border 3 3)
 (border 30 30)
+;;just adding some edge cases
+(border 1 1)
+(border 0 0)
 
 
 ;(defn generate-coordinates [x y] 
