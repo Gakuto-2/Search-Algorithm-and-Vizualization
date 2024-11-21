@@ -64,8 +64,11 @@
 
 ;(into #{2 3 4} #{1 2 4})
 
+;;; ________DO NOT TOUCH________
 (defn border [x y]
   (into (h-wall x y) (v-wall x y)))
+;;; ____________________________
+
 
 (border 3 3)
 (border 30 30)
