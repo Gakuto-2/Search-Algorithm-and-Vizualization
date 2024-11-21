@@ -26,6 +26,7 @@
 (disj #{[1 2] [3 4]} [1 2])
 
 
+
 ;__________________________________________________________________________________________
 
 ;; CODING
@@ -66,13 +67,37 @@
       (let [new-y (inc (rand-int (- y 1)))]
         (into (conj [] (nth start 0)) [new-y]))
       (let [new-x (inc (rand-int (- x 1)))]
-        (into [new-x] (rest start)))))
+        (into [new-x] (rest start))))
+    )
   )
 (end-node 5 5 [1 3])
 
 ;; where and how can I store the nodes?
 ;; use the start and end node twice: 1. generate the wall   2. to remove from the empty-space before generating a new start node.
 ;; We also need to record the start node to generate the end node...
+
+
+(defn stablize
+  [start end] 
+  (let [walltrack #{}] 
+    (if (= (rest start) (rest end)) ;; y axis固定 
+      (if (<= (nth start 0) (nth end 0)) 
+        (for [i (range (nth start 0) (nth end 0) 1)] 
+          (conj walltrack [i (nth start 1)])) 
+        (for [i (range (nth end 0) (nth start 0) 1)] 
+          (conj walltrack [i (nth start 1)])))  
+      
+      (if (<= (nth start 1) (nth end 1)) ;; x 固定 
+        (for [j (range (nth start 1) (nth end 1) 1)] 
+          (conj walltrack [(nth start 0) j])) 
+        (for [j (range (nth end 1) (nth start 1) 1)] 
+          (conj walltrack [(nth start 0) j]))))))
+
+(stablize [1 3] [5 3])
+
+(let [ walltrack #{}]
+(for [j (range (nth [2 1] 1) (nth [2 5] 1) 1)]
+  (conj walltrack [(nth [1 3] 0) j])))
 
 (defn generate-wall
   [x y]
