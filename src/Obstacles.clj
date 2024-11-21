@@ -93,29 +93,18 @@
         (for [j (range (nth end 1) (nth start 1) 1)] 
           (conj walltrack [(nth start 0) j]))))))
 
-(stablize [1 3] [5 3])
+(reduce into (stablize [1 3] [5 3]))
 
-(let [walltrack #{}]
-(for [j (range (nth [2 1] 1) (nth [2 5] 1) 1)]
-  (conj walltrack [(nth [1 3] 0) j])))
+        (let [walltrack #{}]
+          (for [j (range (nth [2 1] 1) (nth [2 5] 1) 1)]
+            (conj walltrack [(nth [1 3] 0) j])))
 
 (defn generate-wall
   [x y]
   (let [start (choose-node x y)]
     (let [end (end-node x y start)]
-      (if (= (rest start) (rest end)) ;; y axis固定
-        (if (<= (nth start 0) (nth end 0))
-          (for [i (range (nth start 0) (nth end 0) 1)]
-            (into #{} [i (nth start 1)]))
-          (for [i (range (nth end 0) (nth start 0) 1)]
-               (into #{} [i (nth start 1)])))
-        
-        (if (<= (nth start 1) (nth end 1)) ;; x 固定
-         (for [j (range (nth start 1) (nth end 1) 1)]
-           (into #{} [(nth start 0) j]))
-         (for [j (range (nth end 1) (nth start 1) 1)]
-           (into #{} [(nth start 0) j]))) 
-        ))))
+      (reduce into (stablize start end)))
+    ))
 
 (nth [1 2] 1)
 

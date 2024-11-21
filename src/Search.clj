@@ -31,3 +31,5 @@
 ;; a node contains 4 types of information: 
 ;; node.state
 ;; 
+
+:goal?
