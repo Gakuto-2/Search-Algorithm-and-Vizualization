@@ -95,7 +95,7 @@
 
 (stablize [1 3] [5 3])
 
-(let [ walltrack #{}]
+(let [walltrack #{}]
 (for [j (range (nth [2 1] 1) (nth [2 5] 1) 1)]
   (conj walltrack [(nth [1 3] 0) j])))
 
