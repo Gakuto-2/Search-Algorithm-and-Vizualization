@@ -43,7 +43,8 @@
   )
 
 (empty-space 3 3)
-(def trackempty (seq (empty-space 3 3)))
+(empty-space 5 5)
+;(seq (empty-space 3 3))
 
 
 (rand-nth (seq (empty-space 3 3)))
@@ -51,16 +52,15 @@
 (defn choose-node
   "generating the start node, given the limit for input (we expect 30 30)"
   [x y]
-  (let [options trackempty]
+  (let [options (seq (empty-space x y))]
   (rand-nth options)))
-(choose-node 3 3)
 
-; (disj #{[2 3] [4 5] [1 1]} [1 1])
-;     (disj trackempty start)
-
+(choose-node 10 10)
+(choose-node 5 5)
 
 
 (defn end-node 
+  "generate end node, given the border and start node"
   [x y start] ;; startcord is a vector
   (let [hz (rand-int 2)]
     (if (= hz 0)
@@ -70,6 +70,8 @@
         (into [new-x] (rest start))))
     )
   )
+
+(end-node 5 5 [4 1])
 (end-node 5 5 [1 3])
 
 ;; where and how can I store the nodes?
@@ -77,37 +79,71 @@
 ;; We also need to record the start node to generate the end node...
 
 
-(defn stablize
-  [start end] 
-  (let [walltrack #{}] 
+(defn inter-wall
+  "take the start coords and end coords, and return a hashset with them and the nodes in between"
+  [start end]
+  (let [walltrack #{}]
     (if (= (rest start) (rest end)) ;; y axis固定 
-      (if (<= (nth start 0) (nth end 0)) 
-        (for [i (range (nth start 0) (nth end 0) 1)] 
-          (conj walltrack [i (nth start 1)])) 
-        (for [i (range (nth end 0) (nth start 0) 1)] 
-          (conj walltrack [i (nth start 1)])))  
-      
+      (if (<= (nth start 0) (nth end 0))
+        (for [i (range (nth start 0) (nth end 0) 1)]
+          (conj walltrack [i (nth start 1)]))
+        (for [i (range (nth end 0) (nth start 0) 1)]
+          (conj walltrack [i (nth start 1)])))
+
       (if (<= (nth start 1) (nth end 1)) ;; x 固定 
-        (for [j (range (nth start 1) (nth end 1) 1)] 
-          (conj walltrack [(nth start 0) j])) 
-        (for [j (range (nth end 1) (nth start 1) 1)] 
+        (for [j (range (nth start 1) (nth end 1) 1)]
+          (conj walltrack [(nth start 0) j]))
+        (for [j (range (nth end 1) (nth start 1) 1)]
           (conj walltrack [(nth start 0) j]))))))
 
-(reduce into (stablize [1 3] [5 3]))
+(reduce into (inter-wall [1 3] [5 3]))
+(reduce into (inter-wall [1 3] [1 3])) ;; returns empty vector
 
-        (let [walltrack #{}]
-          (for [j (range (nth [2 1] 1) (nth [2 5] 1) 1)]
-            (conj walltrack [(nth [1 3] 0) j])))
+(defn line-wall
+  "generate start & end point, and all the nodes in between as obstacles"
+  [x y]
+  (let [start (choose-node x y)]
+    (let [end (end-node x y start)] 
+      (reduce into (inter-wall start end)))))
 
-(defn generate-wall
+(defn line-wall
+  "generate start & end point, and all the nodes in between as obstacles"
   [x y]
   (let [start (choose-node x y)]
     (let [end (end-node x y start)]
-      (reduce into (stablize start end)))
-    ))
+      (if (= start end)  
+      (line-wall x y)  ;; using recursion here!
+      (reduce into (inter-wall start end))))))
 
-(nth [1 2] 1)
+(line-wall 10 10)
+(line-wall 4 4)
+;; what can I do to avoid [] (an empty hashset??)
+;; check if start node is not the same as the end node
+;; use RECURSION!!!!!
+(rand-int 2)
 
+(defn scaler
+  [x y]
+    (if (<= x y)
+    x
+    y))
+(scaler 10 2)
+
+
+;; うまくいかない
+(defn generate-wall
+  [x y]
+  (let [hashset #{}] 
+    (for [i (range 3)] 
+      (into hashset (line-wall x y))))
+  )
+
+(defn generate-wall
+  [x y]
+  (for [i (range 3)]
+    (line-wall x y)))
+
+(generate-wall 10 10)
 
 ; start & end matching in x or y?
 (if (= (rest [1 2 3]) (rest [1 2 3]))
@@ -116,8 +152,8 @@
 
 (generate-wall 3 3)
 
-(into ['nX] (rest ['x 'y]))
-(into (conj [] (nth ['x 'y] 0)) ['nY])
+; (into ['nX] (rest ['x 'y]))
+; (into (conj [] (nth ['x 'y] 0)) ['nY])
 
 
 
