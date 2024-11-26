@@ -100,7 +100,7 @@
 (reduce into (inter-wall [1 3] [1 3])) ;; returns empty vector
 
 (defn line-wall
-  "generate start & end point, and all the nodes in between as obstacles"
+  "works but also returns empty coords"
   [x y]
   (let [start (choose-node x y)]
     (let [end (end-node x y start)] 
@@ -133,17 +133,31 @@
 ;; うまくいかない
 (defn generate-wall
   [x y]
-  (let [hashset #{}] 
+  (let [newhash #{}] 
     (for [i (range 3)] 
-      (into hashset (line-wall x y))))
+      (into newhash (line-wall x y))))
   )
 
-(defn generate-wall
+(defn pre-generate-wall
+  "A pre-stage of wall generatio (ONLY 3 WALLS RIGHT NOW!!!). generate walls, but puts it in a list"
   [x y]
   (for [i (range 3)]
     (line-wall x y)))
 
+(pre-generate-wall 10 10)
+;________________________________________________________________________________________
+(defn generate-wall
+  "the official wall generation with limit x and y"
+  [x y] 
+  (reduce into (pre-generate-wall x y)))
+
 (generate-wall 10 10)
+;_________________________________________________________________________________________
+
+
+;; BRAINSTORM
+
+;(seq #{[2 0] [2 1] [2 3] [2 5]})
 
 ; start & end matching in x or y?
 (if (= (rest [1 2 3]) (rest [1 2 3]))
@@ -164,9 +178,6 @@
 ;    (disj options s-node)))
 
 ;(remove-node 3 3)
-
-
-
 
 (for [i (range 3)]
   (for [j (range 3)]
