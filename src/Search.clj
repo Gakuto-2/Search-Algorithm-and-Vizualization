@@ -11,13 +11,13 @@
 ;;; TOP
 (first [[1 1] [2 2] [3 3]])
 
-;;; POP
+;;; POP there is a pop function
 (vec (rest [[1 1] [2 2] [3 3]]))
 
 ;;; ADD
 (conj [[1 1] [2 2] [3 3]] [0 0])
 (vec (cons [0 0] [[1 1] [2 2] [3 3]]))
-;;;; now with cost function...
+;;;; 
 ; for every i in (count [coll]) --> USE RECURSION!!! with FIRST [coll]
 ; if node.cost-path(first [coll]) < node.cost-path(s) then (vec (cons [s] [coll]))
 

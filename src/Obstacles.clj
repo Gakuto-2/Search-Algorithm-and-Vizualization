@@ -98,7 +98,7 @@
         (for [j (range (nth end 1) (nth start 1) 1)]
           (conj walltrack [(nth start 0) j]))))))
 
-(reduce into (inter-wall [1 3] [5 3]))
+(reduce into (inter-wall [1 3] [5 3])) ;; no end node is included
 (reduce into (inter-wall [1 3] [1 3])) ;; returns empty vector
 
 (defn line-wall
@@ -139,11 +139,11 @@
     (for [i (range 3)] 
       (into newhash (line-wall x y))))
   )
-
+;________________________________________________________________________________________
 (defn pre-generate-wall
   "A pre-stage of wall generatio (ONLY 20 WALLS RIGHT NOW!!!). generate walls, but puts it in a list"
   [x y]
-  (for [i (range 20)]
+  (for [i (range 30)]
     (line-wall x y)))
 
 (pre-generate-wall 10 10)
@@ -156,8 +156,7 @@
 (generate-wall 10 10) ;; set to 20 walls rn
 
 (def OBS (generate-wall 5 5))
-;_________________________________________________________________________________________
-
+;________________________________________________________________________________________
 (disj OBS [1 1] [2 2] [3 3])
 
 (disj #{[1 1] [1 0] [1 2] [1 3]} [1 2] )
