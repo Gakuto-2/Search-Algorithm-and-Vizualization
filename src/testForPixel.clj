@@ -1,6 +1,7 @@
 (ns testForPixel
   (:require [quil.core :as q]
-            [Borders :refer [border]]))
+            [Borders :refer [border]]
+            [Obstacles :refer [generate-wall]]))
 
 (q/defsketch testForPixel
   :title "Fill Specific Cells in Grid"
@@ -9,7 +10,7 @@
            (q/background 255) ; Set the background to white
            (let [grid-size 31         ; Number of cells (30x30)
                  cell-size (/ 300 grid-size) ; Size of each cell (10 pixels)
-                 target-cells (border 30 30)] ; Set of [row, col] to fill
+                 target-cells (into (border 30 30) (generate-wall 30 30))] ; Set of [row, col] to fill
                  
                  ; Set grid line color to light gray
              (q/stroke 0 255 0)

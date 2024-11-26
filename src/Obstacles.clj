@@ -139,9 +139,9 @@
   )
 
 (defn pre-generate-wall
-  "A pre-stage of wall generatio (ONLY 3 WALLS RIGHT NOW!!!). generate walls, but puts it in a list"
+  "A pre-stage of wall generatio (ONLY 20 WALLS RIGHT NOW!!!). generate walls, but puts it in a list"
   [x y]
-  (for [i (range 3)]
+  (for [i (range 20)]
     (line-wall x y)))
 
 (pre-generate-wall 10 10)
@@ -154,6 +154,7 @@
 (generate-wall 10 10)
 ;_________________________________________________________________________________________
 
+(into #{[1 1] [2 2]} #{[1 0] [3 0]})
 
 ;; BRAINSTORM
 
