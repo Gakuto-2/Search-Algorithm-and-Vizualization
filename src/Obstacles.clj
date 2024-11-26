@@ -31,6 +31,8 @@
 
 ;; CODING
 ; we have the borders hashset
+
+;__________________________________________________________________ Used in Maze
 (defn empty-space
   "fn that keeps track of the options of generating the start node"
   [x y]
@@ -45,7 +47,7 @@
 (empty-space 3 3)
 (empty-space 5 5)
 ;(seq (empty-space 3 3))
-
+;__________________________________________________________________
 
 (rand-nth (seq (empty-space 3 3)))
 
@@ -151,8 +153,14 @@
   [x y] 
   (reduce into (pre-generate-wall x y)))
 
-(generate-wall 10 10)
+(generate-wall 10 10) ;; set to 20 walls rn
+
+(def OBS (generate-wall 5 5))
 ;_________________________________________________________________________________________
+
+(disj OBS [1 1] [2 2] [3 3])
+
+(disj #{[1 1] [1 0] [1 2] [1 3]} [1 2] )
 
 (into #{[1 1] [2 2]} #{[1 0] [3 0]})
 
