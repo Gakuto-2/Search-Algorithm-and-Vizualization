@@ -1,13 +1,18 @@
 (ns Maze
   "Possible actions are [:N :E :S :W]"
   (:require [Obstacles :refer [generate-wall empty-space OBS]]))
-(first [1 4])
+
+
+(defn check? [obstacles state](into #{} (filter (fn [element] (= (first element) (inc (first state)))) obstacles)))
+
+
+
 
 (defn possible-actions 
   "Obstacles are hashset of coordinate pairs, and state is a coordinate pair"
   [obstacles state] 
   (let [PosA []]
-    (if (= (first obstacles) (first state))))
+    )
   )
 
 (def maze1 (generate-wall 5 5))
