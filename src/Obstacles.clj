@@ -143,7 +143,7 @@
 (defn pre-generate-wall
   "A pre-stage of wall generatio (ONLY 20 WALLS RIGHT NOW!!!). generate walls, but puts it in a list"
   [x y]
-  (for [i (range 30)]
+  (for [i (range 20)]
     (line-wall x y)))
 
 (pre-generate-wall 10 10)
@@ -157,6 +157,8 @@
 
 (def OBS (generate-wall 5 5))
 ;________________________________________________________________________________________
+
+
 (disj OBS [1 1] [2 2] [3 3])
 
 (disj #{[1 1] [1 0] [1 2] [1 3]} [1 2] )
