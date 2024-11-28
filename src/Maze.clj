@@ -1,12 +1,13 @@
 (ns Maze
   "Possible actions are [:N :E :S :W]"
   (:require [Obstacles :refer [generate-wall empty-space OBS]]))
-
+(first [1 4])
 
 (defn possible-actions 
   "Obstacles are hashset of coordinate pairs, and state is a coordinate pair"
   [obstacles state] 
-  
+  (let [PosA []]
+    (if (= (first obstacles) (first state))))
   )
 
 (def maze1 (generate-wall 5 5))
@@ -34,4 +35,3 @@
 (:Goal problem)
 ((:Actions problem) [1 1])
 
-;; Do I 保存 the obstacles???
