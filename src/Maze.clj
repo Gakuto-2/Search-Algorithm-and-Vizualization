@@ -6,23 +6,56 @@
 (defn check? [obstacles state](into #{} (filter (fn [element] (= (first element) (inc (first state)))) obstacles)))
 
 
+(defn toNorth
+  [obs [x y]]
+  (when-not (obs [x (dec y)])
+    :N))
 
+(toNorth #{[1 1]} [1 2])
+
+(defn toWest
+  [obs [x y]]
+    (when-not (obs [(dec x) y]) 
+      :W))
+
+(defn toSouth
+  [obs [x y]]
+  (when-not (obs [x (inc y)])
+     :S))
+
+(defn toEast
+  [obs [x y]]
+  (when-not (obs [(inc x) y]) 
+    :E))
 
 (defn possible-actions 
   "Obstacles are hashset of coordinate pairs, and state is a coordinate pair"
   [obstacles state] 
-  (let [PosA []]
-    )
+  (remove nil?
+    (map (fn [f] (f obstacles state)) [toNorth toEast toSouth toWest])) 
   )
 
+(possible-actions #{} [2 3])
+(possible-actions #{[3 3] [2 4]} [2 3])
 (def maze1 (generate-wall 5 5))
+
+
 
 (defn take-action
   "Search Algorithm gives a state and a possible action"
-  [state action]
-  (if (= action :N)
-    )
+  [ [x y] action]
+  (cond 
+    (= action :N) [x (dec y)]
+    (= action :S) [x (inc y)] 
+    (= action :E) [(inc x) y]
+    (= action :W) [(dec x) y]
+    ) 
   )
+
+(take-action [1 2] :N)
+(take-action [1 2] :S)
+(take-action [1 2] :W)
+(take-action [1 2] :E)
 
 ;; partial allows us to make it into one input
 

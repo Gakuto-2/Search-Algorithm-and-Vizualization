@@ -161,7 +161,7 @@
 (into #{} (filter (fn [element] (= (first element) (inc (first [2 3])))) #{[1 2] [2 3] [3 4] [2 5]}))
 
 
-
+(#{[1 2] [2 2] [1 4]} [(inc (first [1 2])) (second [1 2])])
 
 (disj OBS [1 1] [2 2] [3 3])
 
