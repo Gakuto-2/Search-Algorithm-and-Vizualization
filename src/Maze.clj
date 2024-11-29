@@ -42,7 +42,7 @@
 
 
 (defn take-action
-  "Search Algorithm gives a state and a possible action"
+  "Gives a state and an action, and receives the result state of that action"
   [ [x y] action]
   (cond 
     (= action :N) [x (dec y)]
@@ -73,3 +73,6 @@
 (:Goal problem)
 ((:Actions problem) [1 1])
 
+
+;; map
+#{[]}
