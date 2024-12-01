@@ -1,6 +1,6 @@
 (ns Maze
   "Possible actions are [:N :E :S :W]"
-  (:require [Obstacles :refer [generate-wall empty-space OBS]]))
+  (:require [Obstacles :refer [generate-wall empty-space]]))
 
 
 (defn check? [obstacles state](into #{} (filter (fn [element] (= (first element) (inc (first state)))) obstacles)))
@@ -72,6 +72,7 @@
 (:Initial problem)
 (:Goal problem)
 ((:Actions problem) [1 1])
+((:Results problem) [1 1] :N)
 
 
 ;; map
