@@ -3,10 +3,7 @@
             [Borders :refer [border]]
             [Obstacles :refer [generate-wall]]))
 
-(q/defsketch testForPixel
-  :title "Fill Specific Cells in Grid"
-  :size [300 300] ; 300x300 pixels
-  :setup (fn []
+(defn setup []
            (q/background 255) ; Set the background to white
            (let [grid-size 31         ; Number of cells (30x30)
                  cell-size (/ 300 grid-size) ; Size of each cell (10 pixels)
@@ -40,4 +37,27 @@
                    (if (contains? target-cells [row col])
                      (q/fill 0 255 0) ; Fill with green if it's a target cell
                      (q/fill 0)) ; Fill with black otherwise 
-                   (q/rect x y cell-size cell-size)))))))
+                   (q/rect x y cell-size cell-size))))))
+
+
+(defn draw-state
+  [paint]
+  (q/fill paint 0 255 255))
+
+(defn update-state
+  [x] 
+  if(< x 31)
+  (inc x)
+  ((let [x 0]) (inc y)))
+
+
+
+(q/defsketch testForPixel
+  :title "Fill Specific Cells in Grid"
+  :size [300 300] ; 300x300 pixels
+  :setup setup
+  :draw draw-state
+  :update update-state)
+
+
+
