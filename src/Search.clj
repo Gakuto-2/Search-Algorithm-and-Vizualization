@@ -65,7 +65,7 @@
      :parent ()
      :action ()})
 
-  (let [frontier [(:Initial problem) ]] 
+  (let [frontier '(:Initial problem) ] 
     (let [reached [(:Initial problem) ]]
       (while (not (empty? frontier))
         (def (:state (pop frontier)))
@@ -75,9 +75,14 @@
     ) 
   )
 
+(empty? '())
+(empty? [])
 
 (def node 
   {:state (:Initial problem)
-   :parent ()
+   :parent []
    :action ()})
+
+(:state node)
+(:parent node)
 
