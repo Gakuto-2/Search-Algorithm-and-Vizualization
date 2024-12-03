@@ -1,6 +1,7 @@
 (ns Maze
   "Possible actions are [:N :E :S :W]"
-  (:require [Obstacles :refer [generate-wall empty-space]]))
+  (:require [Obstacles :refer [generate-wall empty-space]] 
+            [Borders :refer [border]]))
 
 
 (defn check? [obstacles state](into #{} (filter (fn [element] (= (first element) (inc (first state)))) obstacles)))
@@ -60,6 +61,19 @@
 ;; partial allows us to make it into one input
 
 ;; initial と endが　wallにないようにgenerate
+
+(def test-problem
+  (let [borders (border 30 30)]
+    {:INITIAL [1 1]
+     :GOAL [29 29] 
+     :ACTIONS (partial possible-actions borders) 
+     :RESULTS take-action}))
+
+(:INITIAL test-problem)
+(:GOAL test-problem)
+((:ACTIONS test-problem) [1 1])
+((:RESULTS test-problem) [1 1] :E)
+
 
 (def problem {:INITIAL (rand-nth (seq (empty-space 30 30)))
               :GOAL (rand-nth (seq (empty-space 30 30)))

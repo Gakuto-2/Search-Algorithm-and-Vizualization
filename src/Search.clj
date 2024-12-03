@@ -1,6 +1,6 @@
 
 (ns Search
-  (:require [Maze :refer [problem]])
+  (:require [Maze :refer [test-problem]])
   )
 
 #{[1 16]
@@ -60,27 +60,38 @@
   "receives the problem, and returns a solution node or a failure"
   [problem] 
 
-  (def node
+  (let
+   [node
     {:state (:INITIAL problem)
      :parent ()
-     :action ()})
-
-  (let [frontier '(:INITIAL problem) ] 
-    (let [reached [(:INITIAL problem) ]] ;; reached here does not need to be a lookup table
-      (while (not (empty? frontier))
-        (def (:state (pop frontier))
-          
-          ) 
+     :action ()}
+    
+   frontier '(:INITIAL problem) 
+    reached #{(:INITIAL problem) }] ;; reached here does not need to be a lookup table, so a hash set
+    (while (not (empty? frontier))
+      (def (:state (pop frontier)
+                   
+                   )
         nil
-        ) ;; change node
-      )
-    ) 
-  )
+        ) ;; change node 
+  )))
 
-(defn EXPAND [problem, node]
-  (let [s (:state node)]
-    (for [i (count (:Actions ))])
+(defn EXPAND 
+  "returns a collection of nodes"
+  [problem, node]
+  (let [s (:state node)
+        poss-actions ((:ACTIONS problem) s)]
+    
+    (for [action poss-actions]
+      {:state ((:RESULTS problem) s action)
+       :parent node
+       :action action} )
     ))
+
+(EXPAND test-problem 
+        {:state [4 4]
+         :parent nil
+         :action nil})
 
 (empty? '())
 (empty? [])
