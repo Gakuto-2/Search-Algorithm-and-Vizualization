@@ -61,18 +61,18 @@
 
 ;; initial と endが　wallにないようにgenerate
 
-(def problem {:Initial (rand-nth (seq (empty-space 30 30)))
-              :Goal (rand-nth (seq (empty-space 30 30)))
-              :Actions (partial possible-actions maze1)
-              :Results take-action})
+(def problem {:INITIAL (rand-nth (seq (empty-space 30 30)))
+              :GOAL (rand-nth (seq (empty-space 30 30)))
+              :ACTIONS (partial possible-actions maze1)
+              :RESULTS take-action})
 
 (def hundred-times (partial * 100 10))
 (hundred-times 4)
 
-(:Initial problem)
-(:Goal problem)
-((:Actions problem) [1 1])
-((:Results problem) [1 1] :N)
+(:INITIAL problem)
+(:GOAL problem)
+((:ACTIONS problem) [1 1])
+((:RESULTS problem) [1 1] :N)
 
 
 ;; map

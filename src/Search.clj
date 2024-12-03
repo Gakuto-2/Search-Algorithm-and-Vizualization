@@ -61,26 +61,32 @@
   [problem] 
 
   (def node
-    {:state (:Initial problem)
+    {:state (:INITIAL problem)
      :parent ()
      :action ()})
 
-  (let [frontier '(:Initial problem) ] 
-    (let [reached [(:Initial problem) ]]
+  (let [frontier '(:INITIAL problem) ] 
+    (let [reached [(:INITIAL problem) ]] ;; reached here does not need to be a lookup table
       (while (not (empty? frontier))
-        (def (:state (pop frontier)
-        ))
-        
+        (def (:state (pop frontier))
+          
+          ) 
+        nil
         ) ;; change node
       )
     ) 
   )
 
+(defn EXPAND [problem, node]
+  (let [s (:state node)]
+    (for [i (count (:Actions ))])
+    ))
+
 (empty? '())
 (empty? [])
 
 (def node 
-  {:state (:Initial problem)
+  {:state (:INITIAL problem)
    :parent []
    :action ()})
 
