@@ -61,14 +61,14 @@
   [problem] 
 
   (let
-   [node
+   [initial-node
     {:state (:INITIAL problem)
-     :parent ()
-     :action ()}
-    
-   frontier '(:INITIAL problem) 
+     :parent nil
+     :action nil}
+     
+    frontier '(intial-node)  ;; we store nodes because nodes are EXPANDed
     reached #{(:INITIAL problem) }] ;; reached here does not need to be a lookup table, so a hash set
-    (while (not (empty? frontier))
+    (loop (not (empty? frontier))
       (def (:state (pop frontier)
                    
                    )
@@ -89,7 +89,7 @@
     ))
 
 (EXPAND test-problem 
-        {:state [4 4]
+        {:state [1 1]
          :parent nil
          :action nil})
 
