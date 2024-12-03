@@ -68,7 +68,8 @@
   (let [frontier '(:Initial problem) ] 
     (let [reached [(:Initial problem) ]]
       (while (not (empty? frontier))
-        (def (:state (pop frontier)))
+        (def (:state (pop frontier)
+        ))
         
         ) ;; change node
       )
