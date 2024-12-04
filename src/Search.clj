@@ -65,19 +65,36 @@
     {:state (:INITIAL problem)
      :parent nil
      :action nil}
-     
-    frontier '(intial-node)  ;; we store nodes because nodes are EXPANDed
-    reached #{(:INITIAL problem) }] ;; reached here does not need to be a lookup table, so a hash set
+    
+    frontier '[intial-node]  ;; we store nodes because nodes are EXPANDed
+    reached #{(:INITIAL problem) }] ;; reached here is a lookup table, so we'll do a hash-set of vectors!! (>> using hash-set as a function, to look up state coordinates) 
+
+    
+
     (loop (not (empty? frontier))
-      (def (:state (pop frontier)
-                   
-                   )
-        nil
-        ) ;; change node 
-  )))
+      (let  
+       [node  {:state  (:state (peek (apply list frontier)))
+               :parent (:parent (peek (apply list frontier)))
+               :action (:action (peek (apply list frontier)))} 
+        frontier (apply vector (pop (apply list frontier)))] 
+        (if (= (:state node) (:GOAL problem))
+          node
+          (for [child (EXPAND problem node)]
+            (let [s (:state child)])
+            (if (= (reached s) nil)
+              ((def reached (conj reached s))
+               (def frontier (apply vector (pop (apply list (conj frontier node))))))) ;; is defining ok???  
+            )
+          ) 
+        ) ;; change node
+      failure ;; あってる？ what to do when we want to return failure?
+      )
+    ))
+
+
 
 (defn EXPAND 
-  "returns a collection of nodes"
+  "takes the problem and node of the current state, and returns a collection of NODES (hash-map), not STATE!!!!" 
   [problem, node]
   (let [s (:state node)
         poss-actions ((:ACTIONS problem) s)]
@@ -88,19 +105,28 @@
        :action action} )
     ))
 
+
+
 (EXPAND test-problem 
         {:state [1 1]
          :parent nil
          :action nil})
 
-(empty? '())
+(EXPAND test-problem 
+        {:state [1 3]
+         :parent {:action :S, :parent {:action nil, :parent nil, :state [1 1]}, :state [1 2]}
+         :action :S})
+
+
+;(apply vector (cons [5 5] [[1 2] [2 4]]))
+;(pop (apply vector (cons [5 5] [[1 2] [2 4]])))
+
+(conj [[1 2] [2 4]] [5 5])
+(apply vector (pop (apply list (conj [[1 2] [2 4]] [5 5]))))
+
+(peek (apply list [[1 2] [2 4] [5 5]]))
+(pop (apply list [[1 2] [2 4] [5 5]]))
+
+;(empty? '())
 (empty? [])
-
-(def node 
-  {:state (:INITIAL test-problem)
-   :parent []
-   :action ()})
-
-(:state node)
-(:parent node)
 
