@@ -97,7 +97,7 @@
 (empty? [])
 
 (def node 
-  {:state (:INITIAL problem)
+  {:state (:INITIAL test-problem)
    :parent []
    :action ()})
 
