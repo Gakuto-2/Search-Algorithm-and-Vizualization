@@ -63,9 +63,9 @@
 ;; initial と endが　wallにないようにgenerate
 
 (def test-problem
-  (let [borders (border 30 30)]
+  (let [borders (border 5 5)]
     {:INITIAL [1 1]
-     :GOAL [29 29] 
+     :GOAL [3 3] 
      :ACTIONS (partial possible-actions borders) 
      :RESULTS take-action}))
 

@@ -55,6 +55,16 @@
 
 ;______________________________________________________________________________________________________________________________________________________________________
 
+(defn EXPAND
+  "takes the problem and node of the current state, and returns a collection of NODES (hash-map), not STATE!!!!"
+  [problem, node]
+  (let [s (:state node)
+        poss-actions ((:ACTIONS problem) s)]
+    ;(println s)
+    (for [action poss-actions]
+      {:state ((:RESULTS problem) s action)
+       :parent node
+       :action action})))
 
 (defn Search-Algorithm
   "receives the problem, and returns a solution node or a failure"
@@ -64,47 +74,27 @@
    [initial-node
     {:state (:INITIAL problem)
      :parent nil
-     :action nil}
+     :action nil} ]
     
-    frontier '[intial-node]  ;; we store nodes because nodes are EXPANDed
-    reached #{(:INITIAL problem) }] ;; reached here is a lookup table, so we'll do a hash-set of vectors!! (>> using hash-set as a function, to look up state coordinates) 
-
-    
-
-    (loop (not (empty? frontier))
-      (let  
-       [node  {:state  (:state (peek (apply list frontier)))
-               :parent (:parent (peek (apply list frontier)))
-               :action (:action (peek (apply list frontier)))} 
-        frontier (apply vector (pop (apply list frontier)))] 
-        (if (= (:state node) (:GOAL problem))
-          node
-          (for [child (EXPAND problem node)]
-            (let [s (:state child)])
-            (if (= (reached s) nil)
-              ((def reached (conj reached s))
-               (def frontier (apply vector (pop (apply list (conj frontier node))))))) ;; is defining ok???  
-            )
-          ) 
-        ) ;; change node
-      failure ;; あってる？ what to do when we want to return failure?
-      )
+    (loop [frontier [initial-node] ;; we store nodes because nodes are EXPANDed
+           reached #{(:INITIAL problem)}] ;; reached here is a lookup table, so we'll do a hash-set of vectors!! (>> using hash-set as a function, to look up state coordinates) ] 
+           (if (empty? frontier) 
+             nil   
+             (let
+              [node (peek frontier) 
+               children (EXPAND problem node)
+               solutions (filter 
+                          (fn [child] (= (:state child) (:GOAL problem))) 
+                          children)
+               nreached (into reached (map :state children)) ;; keyword :state as a function  
+               nfrontier (into (pop frontier) (remove (fn [child] (reached (:state child))) children))]
+               (if (not (empty? solutions))
+                 (first solutions)
+                 (recur nfrontier nreached))) ;; change node
+      ))
     ))
 
-
-
-(defn EXPAND 
-  "takes the problem and node of the current state, and returns a collection of NODES (hash-map), not STATE!!!!" 
-  [problem, node]
-  (let [s (:state node)
-        poss-actions ((:ACTIONS problem) s)]
-    
-    (for [action poss-actions]
-      {:state ((:RESULTS problem) s action)
-       :parent node
-       :action action} )
-    ))
-
+(Search-Algorithm test-problem)
 
 
 (EXPAND test-problem 
