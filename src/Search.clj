@@ -94,8 +94,12 @@
       ))
     ))
 
-(Search-Algorithm test-problem)
+(extract-solution (Search-Algorithm test-problem) ())
 
+(defn extract-solution [node solution]
+  (if node
+    (extract-solution (:parent node) (conj solution (:state node)))
+    solution))
 
 (EXPAND test-problem 
         {:state [1 1]
