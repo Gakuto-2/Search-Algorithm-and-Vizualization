@@ -7,7 +7,7 @@
            (q/background 255) ; Set the background to white
            (let [grid-size 31         ; Number of cells (30x30)
                  cell-size (/ 300 grid-size) ; Size of each cell (10 pixels)
-                 target-cells (into (border 31 31) #{[1 16]
+                 target-cells (into (border 30 30) #{[1 16]
                                                      [2 2] [2 3] [2 4] [2 5] [2 9] [2 10] [2 11] [2 12] [2 16] [2 22] [2 27] [2 28]
                                                      [3 4] [3 16] [3 22]
                                                      [4 4] [4 7] [4 20] [4 21] [4 22] [4 23]
@@ -39,16 +39,22 @@
                      (q/fill 0)) ; Fill with black otherwise 
                    (q/rect x y cell-size cell-size))))))
 
-
+(def initial-state [1 1])
 (defn draw-state
-  [paint]
-  (q/fill paint 0 255 255))
+  [state]; input(state) will be current state in the current node so that we can keep track of the algorithm.
+  (let [[x y] state])
+  (q/fill state 0 255 255))
 
 (defn update-state
-  [x] 
-  if(< x 31)
-  (inc x)
-  ((let [x 0]) (inc y)))
+  [state]
+  (let [{:current [x y]} state]
+    {:x (inc x)
+     :y y}))
+
+(defn update-state
+  [state]
+  (let [[x y] state])
+  (q/fill state 0 255 255))
 
 
 
