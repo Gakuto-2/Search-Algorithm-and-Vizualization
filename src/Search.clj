@@ -90,7 +90,7 @@
                nfrontier (into (pop frontier) (remove (fn [child] (reached (:state child))) children))]
                (if (not (empty? solutions))
                  (first solutions)
-                 (recur nfrontier nreached))) ;; change node
+                 (recur nfrontier nreached))) ;; returns to the start of the loop with new input 
       ))
     ))
 
