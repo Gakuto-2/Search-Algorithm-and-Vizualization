@@ -68,41 +68,46 @@
        :parent node
        :action action})))
 
-(defn Search-Algorithm
-  "receives the problem, and returns a solution node or a failure"
-  [problem] 
+(defn searchStep [[problem frontier reached]] ;; reached here is a lookup table, so we'll do a hash-set of vectors!! (>> using hash-set as a function, to look up state coordinates) ] 
+  (if (empty? frontier)
+    nil
+    (let
+     [node (peek frontier)
+      children (EXPAND problem node)
+      solutions (filter
+                 (fn [child] (= (:state child) (:GOAL problem)))
+                 children)
+      nreached (into reached (map :state children)) ;; keyword :state as a function  
+                ;; might put a function here to draw the reached states
+      nfrontier (into (pop frontier) (remove (fn [child] (reached (:state child))) children))]
+      (if (not (empty? solutions))
+        (first solutions)
+        [problem nfrontier nreached])))) ;; returns to the start of the loop with new input 
+  
 
-  (let
-   [initial-node
-    {:state (:INITIAL problem)
-     :parent nil
-     :action nil} ]
+  (defn Search-Algorithm
+    "receives the problem, and returns a solution node or a failure"
+    [problem] 
+
+    (let
+     [initial-node
+      {:state (:INITIAL problem)
+       :parent nil
+       :action nil}
+      frontier [initial-node] ;; we store nodes because nodes are EXPANDed
+      reached #{(:INITIAL problem)}]
+      (first (drop-while vector? (iterate searchStep [problem frontier reached])))))
     
-    (loop [frontier [initial-node] ;; we store nodes because nodes are EXPANDed
-           reached #{(:INITIAL problem)}] ;; reached here is a lookup table, so we'll do a hash-set of vectors!! (>> using hash-set as a function, to look up state coordinates) ] 
-           (if (empty? frontier) 
-             nil   
-             (let
-              [node (peek frontier) 
-               children (EXPAND problem node)
-               solutions (filter 
-                          (fn [child] (= (:state child) (:GOAL problem))) 
-                          children)
-               nreached (into reached (map :state children)) ;; keyword :state as a function  
-               ;; might put a function here to draw the reached states
-               nfrontier (into (pop frontier) (remove (fn [child] (reached (:state child))) children))]
-               (if (not (empty? solutions))
-                 (first solutions)
-                 (recur nfrontier nreached))) ;; returns to the start of the loop with new input 
-      ))
-    ))
-
-(extract-solution (Search-Algorithm test-problem) ())
-
 (defn extract-solution [node solution]
   (if node
     (extract-solution (:parent node) (conj solution (:state node)))
     solution))
+
+
+
+(extract-solution (Search-Algorithm test-problem) ())
+
+
 
 (EXPAND test-problem 
         {:state [1 1]
