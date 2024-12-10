@@ -36,7 +36,7 @@
      :else (:solution (extract-solution nstate ())))
     ))
 
-(defn draw-cstate [])
+(defn draw-cstate [cstate])
 
 (q/defsketch Visualization
   :title "Fill Specific Cells in Grid"
