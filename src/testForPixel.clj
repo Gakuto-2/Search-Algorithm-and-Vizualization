@@ -6,7 +6,7 @@
 (defn setup []
            (q/background 255) ; Set the background to white
            (let [grid-size 31         ; Number of cells (30x30)
-                 cell-size (/ 300 grid-size) ; Size of each cell (10 pixels)
+                 cell-size (/ 800 grid-size) ; Size of each cell (10 pixels)
                  target-cells (into (border 30 30) #{[1 16]
                                                      [2 2] [2 3] [2 4] [2 5] [2 9] [2 10] [2 11] [2 12] [2 16] [2 22] [2 27] [2 28]
                                                      [3 4] [3 16] [3 22]
@@ -45,25 +45,14 @@
   (let [[x y] state])
   (q/fill state 0 255 255))
 
-(defn update-state
-  [state]
-  (let [{:current [x y]} state]
-    {:x (inc x)
-     :y y}))
 
-(defn update-state
-  [state]
-  (let [[x y] state])
-  (q/fill state 0 255 255))
 
 
 
 (q/defsketch testForPixel
   :title "Fill Specific Cells in Grid"
-  :size [300 300] ; 300x300 pixels
-  :setup setup
-  :draw draw-state
-  :update update-state)
+  :size [800 800] ; 300x300 pixels
+  :setup setup)
 
 
 
