@@ -13,7 +13,7 @@
 (defn csetup []
   (let [borders (border 30 30)
         problem {:INITIAL [1 1]
-                 :GOAL [3 3]
+                 :GOAL [28 28]
                  :ACTIONS (partial possible-actions borders)
                  :RESULTS take-action}
         initial-node {:state (:INITIAL problem)
@@ -51,6 +51,8 @@
     
     (q/stroke 0 255 0)
     (q/stroke-weight 1)
+    
+    
     
     ;; drawing reached cells
     (q/fill 255 255 0)

@@ -22,18 +22,19 @@
   (if (empty? frontier)
     nil
     (let
-     [node (peek frontier)
+     [node (first frontier)
       children (EXPAND problem node)
       solutions (filter
                  (fn [child] (= (:state child) (:GOAL problem)))
                  children)
       nreached (into reached (map :state children)) ;; keyword :state as a function  
                 ;; might put a function here to draw the reached states
-      nfrontier (into (pop frontier) (remove (fn [child] (reached (:state child))) children))]
+      nfrontier (into (vec (rest frontier)) (remove (fn [child] (reached (:state child))) children))]
       (if (not (empty? solutions))
         (first solutions)
         [problem nfrontier nreached])))) ;; returns to the start of the loop with new input 
   
+
 
   (defn Search-Algorithm
     "receives the problem, and returns a solution node or a failure"
@@ -44,7 +45,7 @@
       {:state (:INITIAL problem)
        :parent nil
        :action nil}
-      frontier (list initial-node) ;; we store nodes because nodes are EXPANDed
+      frontier (vector initial-node) ;; we store nodes because nodes are EXPANDed
       reached #{(:INITIAL problem)}]
       (first (drop-while vector? (iterate searchStep [problem frontier reached])))))
     
