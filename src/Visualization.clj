@@ -54,7 +54,7 @@
           (let [x (* col cell-size) ; Top-left X of the cell
                 y (* row cell-size)] ; Top-left Y of the cell
                        ; Check if the current cell is a target cell
-            (if (= solution nil) ;;直す
+            (if (= solution nil) ;;直す (if (solution)) でもいいかな？
               (cond 
                 (contains? obstacle-cells [row col]) (q/fill 0 255 0) ; Fill with green if it's a target cell
                 (contains? reached [row col]) (q/fill 255 255 0)
