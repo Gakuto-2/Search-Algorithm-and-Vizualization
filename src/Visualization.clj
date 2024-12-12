@@ -62,10 +62,11 @@
     (doseq [coord obstacle-cells]
       (q/rect (* (first coord) cell-size) (* cell-size (second coord)) cell-size cell-size))
     
-    ;; ;; drawing frontier
-    ;; (q/fill 173 216 230)
-    ;; (doseq [coord frontier]
-    ;;   (q/rect (* (first coord) cell-size) (* cell-size (second coord)) cell-size cell-size))
+    
+    ;; drawing frontier
+    (q/fill 173 216 230)
+    (doseq [coord (map :state frontier)]
+      (q/rect (* (first coord) cell-size) (* cell-size (second coord)) cell-size cell-size))
     
     ;; drawing reached cells
     (when (contains? cstate :solution) 
