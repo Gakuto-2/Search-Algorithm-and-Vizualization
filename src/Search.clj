@@ -1,11 +1,7 @@
 
 (ns Search
-  (:require [Maze :refer [test-problem]])
+  
   )
-
-;; (border 30 30) で 0と30に壁がある、31x31のpixel (obs will range from 1 to 29)
-
-;________________________________________________________________________________________________________________________________________________________________
 
 (defn EXPAND
   "takes the problem and node of the current state, and returns a collection of NODES (hash-map), not STATE!!!!"
@@ -53,24 +49,4 @@
   (if node
     (extract-solution (:parent node) (conj solution (:state node)))
     solution))
-
-
-
-;(extract-solution (Search-Algorithm test-problem) ())
-
-
-
-;; (EXPAND test-problem 
-;;         {:state [1 1]
-;;          :parent nil
-;;          :action nil})
-
-;; (EXPAND test-problem 
-;;         {:state [1 3]
-;;          :parent {:action :S, :parent {:action nil, :parent nil, :state [1 1]}, :state [1 2]}
-;;          :action :S})
-
-
-;(apply vector (cons [5 5] [[1 2] [2 4]]))
-;(pop (apply vector (cons [5 5] [[1 2] [2 4]])))
 
