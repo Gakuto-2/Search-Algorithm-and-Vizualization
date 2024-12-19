@@ -1,5 +1,5 @@
 (ns test
-  "Seperating some test cases to see if it works"
+  "Separating some test cases to see if it works"
   (:require [Maze :refer [test-problem]]
             [Search :refer :all]))
 
