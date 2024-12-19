@@ -51,6 +51,7 @@
         frontier [initial-node] ;; we store nodes because nodes are EXPANDed
         reached #{(:INITIAL problem)}
         ]
+    (q/frame-rate 20)
     {:frontier frontier
      :reached reached
      :borders borders
@@ -125,10 +126,27 @@
     ;; ;;          ) ; Fill with black otherwise  
     ;;  (q/rect x y cell-size cell-size))))
 
+(defn csetup2 []
+  (let [borders (into (border 30 30) (generate-wall 30 30))
+        problem {:INITIAL [1 1]
+                 :GOAL [28 28]
+                 :ACTIONS (partial possible-actions borders)
+                 :RESULTS take-action}
+        initial-node {:state (:INITIAL problem)
+                      :parent nil
+                      :action nil}
+        frontier [initial-node] ;; we store nodes because nodes are EXPANDed
+        reached #{(:INITIAL problem)}]
+    (q/frame-rate 20)
+    {:frontier frontier
+     :reached reached
+     :borders borders
+     :problem problem}))
+
 (q/defsketch Visualization
   :title "Fill Specific Cells in Grid"
-  :size [width height] ; 300x300 pixels
-  :setup csetup
+  :size [width height] ; 800x800 pixels
+  :setup csetup 
   :draw draw-cstate
   :update update-cstate
   :middleware [m/fun-mode])

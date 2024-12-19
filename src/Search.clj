@@ -29,7 +29,7 @@
                  children)
       nreached (into reached (map :state children)) ;; keyword :state as a function  
                 ;; might put a function here to draw the reached states
-      nfrontier (into (vec (rest frontier)) (remove (fn [child] (reached (:state child))) children))]
+      nfrontier (into (rest frontier) (remove (fn [child] (reached (:state child))) children))]
       (if (not (empty? solutions))
         (first solutions)
         [problem nfrontier nreached])))) ;; returns to the start of the loop with new input 

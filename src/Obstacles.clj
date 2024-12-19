@@ -153,7 +153,9 @@
   [x y] 
   (reduce into (pre-generate-wall x y)))
 
-(generate-wall 10 10) ;; set to 20 walls rn
+(generate-wall 10 10);; set to 20 walls rn
+(generate-wall 30 30)
+
 
 (def OBS (generate-wall 5 5))
 ;________________________________________________________________________________________
