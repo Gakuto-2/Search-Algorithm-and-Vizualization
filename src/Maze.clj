@@ -6,7 +6,6 @@
 
 (defn check? [obstacles state](into #{} (filter (fn [element] (= (first element) (inc (first state)))) obstacles)))
 
-
 (defn toNorth
   [obs [x y]]
   (when-not (obs [x (dec y)])
